@@ -482,7 +482,7 @@ class DPGUI(ctk.CTkScrollableFrame):
     
     def getItems(self, master):
         max_profit, self.itemsPicked, self.time, self.memory = DynamicProg.unbounded_knapsack(master.n, master.weightWood, master.weightStone, master.weightSteel,
-                                                                 master.weights, master.profits)
+                                                                 master.weights, master.profits, [master.prodRatio, master.popRatio])
         for i in self.itemsPicked:
             item = master.dataset[i]
             self.resource[0] += int(item[1])
@@ -614,7 +614,7 @@ class Table:
 
     def processData(self, data):
         for i, item in enumerate(data):
-            cost = DynamicProg.calculateCost(int(item[1]), int(item[2]), int(item[3]))
+            cost = GR.calculateCost(int(item[1]), int(item[2]), int(item[3]))
             content = (i+1, item[0], item[1], item[2], item[3], item[4], item[5], cost)
             self.table.append(content)
        

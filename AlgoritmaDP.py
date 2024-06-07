@@ -2,7 +2,7 @@ import time
 import tracemalloc
 
 
-def unbounded_knapsack(n, W1, W2, W3, weights, profits):
+def unbounded_knapsack(n, W1, W2, W3, weights, profits, ratio):
     """
     Weight = limit atau batas dari knapsack
     Cost = harga jika barang diambil
@@ -32,7 +32,7 @@ def unbounded_knapsack(n, W1, W2, W3, weights, profits):
                 #Hitung profit secara recursive
                 #Rumus profit saat barang ke i diambil
                 #Rumus profit p1i + p2i + F (i− w1, j − w2, k, -w3)
-                profit = dp(w1 - w1_i, w2 - w2_i, w3 - w3_i) + p1_i + p2_i
+                profit = dp(w1 - w1_i, w2 - w2_i, w3 - w3_i) + calculateProfit(p1_i, p2_i, ratio[0], ratio[1])
                 #Ambil max dari max_profit atau profit
                 #Rumus lain saat barang ke i tidak diambil
                 #Bentuk lain F (i − 1, j)
@@ -59,7 +59,7 @@ def unbounded_knapsack(n, W1, W2, W3, weights, profits):
             if current_w1 >= w1_i and current_w2 >= w2_i and current_w3 >= w3_i:
                 #Cek apakah barang terambil atau tidak
                 #Barang terambil apabila value saat ini adalah jumlah dari value sebelumnya + profit barang
-                if dp(current_w1,current_w2,current_w3) == dp(current_w1 - w1_i,current_w2 - w2_i,current_w3 - w3_i) + p1_i + p2_i:
+                if dp(current_w1,current_w2,current_w3) == dp(current_w1 - w1_i,current_w2 - w2_i,current_w3 - w3_i) + calculateProfit(p1_i, p2_i, ratio[0], ratio[1]):
                     #JIka barang diambil maka simpan index
                     taken_items.append(i)
                     #Kurangi weight dengan cost item untuk pengecekan selanjutnya
@@ -116,12 +116,8 @@ def unbounded_knapsack(n, W1, W2, W3, weights, profits):
             break
     """
     
-
-def calculateCost(wood, stone, steel):
-    rWood = 1
-    rStone = 1.5
-    rSteel = 2
-
-    return wood*rWood + stone*rStone + steel*rSteel
+#Function untuk menghitung total profit
+def calculateProfit(production, population, rProd, rPop):
+    return production * rProd + population * rPop
 
 
