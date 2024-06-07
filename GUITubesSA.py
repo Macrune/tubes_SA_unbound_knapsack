@@ -46,6 +46,7 @@ class App(ctk.CTk):
                 menu = StartMenu(self)
             case "Input Data":
                 print("to input")
+                self.reset()
                 current_page.pack_forget()
                 current_page.destroy()
                 input_data = InputData(self)
@@ -66,6 +67,30 @@ class App(ctk.CTk):
                 current_page.destroy()
                 Result = ResultUI(self)
     
+    def reset(self):
+        self.dataset= []
+        self.weightWood = 0
+        self.weightStone = 0
+        self.weightSteel = 0
+        self.prodRatio = 0
+        self.popRatio = 0
+        self.weights = []
+        self.profits = []
+        self.n = len(self.dataset)
+
+        self.dpResult = []
+        self.dpResource = []
+        self.dpProfit = []
+        self.dpTime = 0
+        self.dpMemory = 0
+
+        self.greedy = []
+        self.grResource = []
+        self.grProfit = []
+        self.GreedyTag = ""
+        self.grTime = 0
+        self.grMemory = 0
+
     def processData(self):
         for i in range(len(self.dataset)):
             weight = (int(self.dataset[i][1]), int(self.dataset[i][2]), int(self.dataset[i][3]))
@@ -365,7 +390,7 @@ class GreedyUI(ctk.CTkScrollableFrame):
             self.grWeight.append(item)
 
         for i in profitPicked:
-            item = master.dataset[i-1]
+            item = master.dataset[i]
             self.grPResource[0] += int(item[1])
             self.grPResource[1] += int(item[2])
             self.grPResource[2] += int(item[3])
